@@ -1,21 +1,28 @@
+# UImGui fork
+
+This is a fork of [psydack/uimgui](https://github.com/charlietran/uimgui) with updates for Unity 6's Render Graph and MacOS / Apple Silicon support. To use this with Unity 6 and URP / Render Graph:
+
+1. Add the UImGui component to your scene and tick the box for "Urp Render Graph Bypass"
+2. _Do Not_ add the ImGui Render Feature to your pipeline as normally instructed
+
 # UImGui
+
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/psydack/uimgui?style=flat-square)  
 <sub>([ImGui library](https://github.com/ocornut/imgui) is available under a free and permissive license, but needs financial support to sustain its continued improvements. In addition to maintenance and stability there are many desirable features yet to be added. If your company is using Dear ImGui, please consider reaching out.)</sub>
 
 UImGui (Unity ImGui) is an UPM package for the immediate mode GUI library using [ImGui.NET](https://github.com/mellinoe/ImGui.NET).
-This project is based on [RG.ImGui](https://github.com/realgamessoftware/dear-imgui-unity) project. 
+This project is based on [RG.ImGui](https://github.com/realgamessoftware/dear-imgui-unity) project.
 This project use [FreeType](https://github.com/ocornut/imgui/tree/master/misc/freetype) as default renderer.
 
 **Using imgui 1.90.1**
 
-----
+---
 
 ## What is Dear ImGui?
 
 > Dear ImGui is a **bloat-free graphical user interface library for C++**. It outputs optimized vertex buffers that you can render anytime in your 3D-pipeline enabled application. It is fast, portable, renderer agnostic and self-contained (no external dependencies).
-> 
+>
 > Dear ImGui is designed to **enable fast iterations** and to **empower programmers** to create **content creation tools and visualization / debug tools** (as opposed to UI for the average end-user). It favors simplicity and productivity toward this goal, and lacks certain features normally found in more high-level libraries.
-
 
 ## Motivation
 
@@ -23,43 +30,43 @@ To update (using ImGui.Net.dll) easier and often.
 
 ## Features
 
-| Feature                                                   |         RG         |      UImGui        | 
-| -----------------                                         | ------------------ | ------------------ |
-| IL2CPP                                                    | :x:                | :heavy_check_mark: |
-| Windows                                                   | :heavy_check_mark: | :heavy_check_mark: |
-| Linux                                                     | :heavy_check_mark: | :heavy_check_mark: |
-| MacOS                                                     | :heavy_check_mark: | :heavy_check_mark: |
-| Custom Assert                                             | :heavy_check_mark: | :x: 		          |
-| Unity Input Manager                                       | :heavy_check_mark: | :heavy_check_mark: |
-| Unity Input System                                        | :heavy_check_mark: | :heavy_check_mark: |
-| Docking                                                   | :x:                | :heavy_check_mark: |
-| RenderPipeline Built in                                   | :heavy_check_mark: | :heavy_check_mark: |
-| RenderPipeline URP                                        | :x:                | :heavy_check_mark: |
-| RenderPipeline HDRP                                       | :x:                | :heavy_check_mark: |
-| Renderer Mesh                                             | :heavy_check_mark: | :heavy_check_mark: |
-| Renderer Procedural                                       | ~                  | :heavy_check_mark: |
-| FreeType                                                  | ~                  | WIP |
-| Image / Texture                                           | :x:				 | :heavy_check_mark: |
-| [ImNodes](https://github.com/Nelarius/imnodes)       		| :x:				 | WIP                |
-| [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo)   | :x:				 | WIP                |
-| [ImPlot](https://github.com/epezent/implot)      		 	| :x:				 | WIP                |
+| Feature                                                 | RG                 | UImGui             |
+| ------------------------------------------------------- | ------------------ | ------------------ |
+| IL2CPP                                                  | :x:                | :heavy_check_mark: |
+| Windows                                                 | :heavy_check_mark: | :heavy_check_mark: |
+| Linux                                                   | :heavy_check_mark: | :heavy_check_mark: |
+| MacOS                                                   | :heavy_check_mark: | :heavy_check_mark: |
+| Custom Assert                                           | :heavy_check_mark: | :x:                |
+| Unity Input Manager                                     | :heavy_check_mark: | :heavy_check_mark: |
+| Unity Input System                                      | :heavy_check_mark: | :heavy_check_mark: |
+| Docking                                                 | :x:                | :heavy_check_mark: |
+| RenderPipeline Built in                                 | :heavy_check_mark: | :heavy_check_mark: |
+| RenderPipeline URP                                      | :x:                | :heavy_check_mark: |
+| RenderPipeline HDRP                                     | :x:                | :heavy_check_mark: |
+| Renderer Mesh                                           | :heavy_check_mark: | :heavy_check_mark: |
+| Renderer Procedural                                     | ~                  | :heavy_check_mark: |
+| FreeType                                                | ~                  | WIP                |
+| Image / Texture                                         | :x:                | :heavy_check_mark: |
+| [ImNodes](https://github.com/Nelarius/imnodes)          | :x:                | WIP                |
+| [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) | :x:                | WIP                |
+| [ImPlot](https://github.com/epezent/implot)             | :x:                | WIP                |
 
-Usage
--------
+## Usage
+
 - [Add package](https://docs.unity3d.com/Manual/upm-ui-giturl.html) from git URL: https://github.com/psydack/uimgui.git or add manually in your packages folders and update your manifest.json with the [lastest version](https://github.com/psydack/uimgui/blob/main/package.json) (e.g: "com.psydack.uimgui" : "5.0.0")
 - Add `UImGui` component to the scene and
 - (Optional) Set `Platform Type` to `Input System` if you're using the new [input system](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/index.html) the `SampleDemoWindow` object on the scene the following properties:
 - If you're using **URP** check [Using URP](https://github.com/psydack/uimgui#using-urp) section, for **HDRP** [Using HDRP](https://github.com/psydack/uimgui#using-hdrp) section, for **built in** check [Using Built in](https://github.com/psydack/uimgui#using-hdrp) section.
-- You're ready. Look [Samples section](https://github.com/psydack/uimgui#samples) for more usage samples.  
-- To use [ImNodes](https://github.com/Nelarius/imnodes), [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) or [ImPlot](https://github.com/epezent/implot)   check the sample script. If you won't use, [you can disable using directives](https://github.com/psydack/uimgui#directives)  
+- You're ready. Look [Samples section](https://github.com/psydack/uimgui#samples) for more usage samples.
+- To use [ImNodes](https://github.com/Nelarius/imnodes), [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) or [ImPlot](https://github.com/epezent/implot) check the sample script. If you won't use, [you can disable using directives](https://github.com/psydack/uimgui#directives)
 - (optional) You can build your ImGui.NET using my custom repo: [ImGui.NET](https://github.com/psydack/ImGui.NET) and [ImGui.NET-nativebuild](https://github.com/psydack/ImGui.NET-nativebuild)
 
-Samples
--------
-It has a demo script called `ShowDemoWindow` inside `UImGui/Sample` folder. 
+## Samples
+
+It has a demo script called `ShowDemoWindow` inside `UImGui/Sample` folder.
 
 You can subscribe to global layout or for a specific `UImGui` context:
-If choose to use global, don't to forget to set ``Do Global Events`` to ``true`` on ``UImGui`` instance.
+If choose to use global, don't to forget to set `Do Global Events` to `true` on `UImGui` instance.
 
 ```cs
 using UImGui;
@@ -76,7 +83,7 @@ public class StaticSample : MonoBehaviour
 
 	private void OnLayout(UImGui.UImGui obj)
 	{
-		// Unity Update method. 
+		// Unity Update method.
 		// Your code belongs here! Like ImGui.Begin... etc.
 	}
 
@@ -124,7 +131,7 @@ public class InstanceSample : MonoBehaviour
 
 	private void OnLayout(UImGui.UImGui obj)
 	{
-		// Unity Update method. 
+		// Unity Update method.
 		// Your code belongs here! Like ImGui.Begin... etc.
 	}
 
@@ -148,6 +155,7 @@ public class InstanceSample : MonoBehaviour
 ```
 
 Sample code
+
 ```cs
 [SerializeField]
 private float _sliderFloatValue = 1;
@@ -169,6 +177,7 @@ private void OnLayout(UImGui.UImGui obj)
 	ImGui.SliderFloat("float", ref _sliderFloatValue, 0.0f, 1.0f);
 }
 ```
+
 ![image](https://user-images.githubusercontent.com/961971/119239324-b54bf880-bb1e-11eb-87e3-0ecbfaafde27.png)
 
 ```cs
@@ -209,6 +218,7 @@ private void OnLayout(UImGui.UImGui obj)
 	ImGui.End();
 }
 ```
+
 ![image](https://user-images.githubusercontent.com/961971/119239823-f42f7d80-bb21-11eb-9f65-9fe03d8b2887.png)
 
 Image Sample
@@ -229,8 +239,9 @@ private void OnLayout(UImGui.UImGui obj)
 	}
 }
 ```
-![image](https://user-images.githubusercontent.com/961971/119574206-b9308280-bd8b-11eb-9df2-8bc07cf57140.png)  
-  
+
+![image](https://user-images.githubusercontent.com/961971/119574206-b9308280-bd8b-11eb-9df2-8bc07cf57140.png)
+
 Custom UserData
 
 ```cs
@@ -283,14 +294,16 @@ private unsafe int CustomCallback(ImGuiInputTextCallbackData* data)
 	return 1;
 }
 ```
+
 ![image](https://user-images.githubusercontent.com/961971/120383734-a1ad4880-c2fb-11eb-87e1-398d5e7aac97.png)
 
-Custom font 
+Custom font
 
 [Thanks](https://github.com/psydack/uimgui/pull/24)  
 [Check here for more information](https://github.com/ocornut/imgui/blob/master/docs/FONTS.md)
 
 - First create a method with ImGuiIOPtr like this
+
 ```cs
 public void AddJapaneseFont(ImGuiIOPtr io)
 {
@@ -310,10 +323,12 @@ public void AddJapaneseFont(ImGuiIOPtr io)
 	//	io.Fonts.AddFontFromFileTTF("fontawesome-webfont.ttf", 18.0f, fontConfigPtr, (System.IntPtr)iconsPtr);
 	//}
 }
-```  
+```
+
 - Assign the object that contain these method in UImGui script
-![image](https://user-images.githubusercontent.com/961971/149441417-54b319c8-30e7-40dd-aa56-edaede47543d.png)
+  ![image](https://user-images.githubusercontent.com/961971/149441417-54b319c8-30e7-40dd-aa56-edaede47543d.png)
 - Create an awesome text:
+
 ```cs
 if (ImGui.Begin("ウィンドウテスト"))
 {
@@ -322,55 +337,55 @@ if (ImGui.Begin("ウィンドウテスト"))
 	ImGui.End();
 }
 ```
+
 ![image](https://user-images.githubusercontent.com/961971/149443777-38f439f5-5aca-4188-a21b-32274e901382.png)  
 Yay!
-  
+
 You can [see more samples here](https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html).
 
-Using URP
--------
-- Add a `Render Im Gui Feature` render feature to the renderer asset. 
+## Using URP
+
+- Add a `Render Im Gui Feature` render feature to the renderer asset.
 - Assign it to the `render feature` field of the DearImGui component.
 - Check this [issue](https://github.com/psydack/uimgui/issues/14) which I describe how to make it work step by step.
 
-Using HDRP
--------
-- When using the ``High Definition Render Pipeline``; 
+## Using HDRP
+
+- When using the `High Definition Render Pipeline`;
 - Add a script called Custom Pass Volume anywhere on your scene;
-- Add "DearImGuiPass" 
+- Add "DearImGuiPass"
 - Update Injection Point to before or after post processing.
 - Good to go.
-Any doubts [see this link](https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@7.1/manual/Custom-Pass.html)
+  Any doubts [see this link](https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@7.1/manual/Custom-Pass.html)
 
-Using Built in
--------
+## Using Built in
+
 No special sets.
 
-Directives
--------
-- ``UIMGUI_REMOVE_IMPLOT``: don't load implot lib and sources.  
-- ``UIMGUI_REMOVE_IMNODES``: don't load imnodes lib and sources.  
-- ``UIMGUI_REMOVE_IMGUIZMO``: don't load imguizmo lib and sources.  
+## Directives
 
-Known issues
--------
+- `UIMGUI_REMOVE_IMPLOT`: don't load implot lib and sources.
+- `UIMGUI_REMOVE_IMNODES`: don't load imnodes lib and sources.
+- `UIMGUI_REMOVE_IMGUIZMO`: don't load imguizmo lib and sources.
 
-Issue: Already using ``System.Runtime.CompilerServices.Unsafe.dll`` will cause the following error: ``Multiple precompiled assemblies with the same name System.Runtime.CompilerServices.Unsafe.dll included or the current platform Only one assembly with the same name is allowed per platform.
-Resolution: add ``UIMGUI_REMOVE_UNSAFE_DLL`` on Project Settings > Player > Other Settings >  Script define symbols > Apply > Restart Unity Editor.  
-  
-Issue: ImPlot isn't work right. 
-  
+## Known issues
+
+Issue: Already using `System.Runtime.CompilerServices.Unsafe.dll` will cause the following error: `Multiple precompiled assemblies with the same name System.Runtime.CompilerServices.Unsafe.dll included or the current platform Only one assembly with the same name is allowed per platform.
+Resolution: add `UIMGUI_REMOVE_UNSAFE_DLL`` on Project Settings > Player > Other Settings > Script define symbols > Apply > Restart Unity Editor.
+
+Issue: ImPlot isn't work right.
+
 Issue: Font atlas crash. There's no fix. Use callback for custom font instead
 
-Credits
--------
+## Credits
+
 Original repo https://github.com/realgamessoftware/dear-imgui-unity  
 Thanks to @lacrc and @airtonmotoki for encouraging me.  
 https://www.conventionalcommits.org/en/v1.0.0/  
-https://semver.org/   
+https://semver.org/  
 https://github.com/yeyushengfan258/Lyra-Cursors  
-https://github.com/lob/generate-changelog  
+https://github.com/lob/generate-changelog
 
-License
--------
+## License
+
 Dear ImGui is licensed under the MIT License, see [LICENSE.txt](https://github.com/ocornut/imgui/blob/master/LICENSE.txt) for more information.

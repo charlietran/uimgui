@@ -6,7 +6,6 @@ using UImGui.Renderer;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-
 namespace UImGui
 {
 	// TODO: Check Multithread run.
@@ -78,6 +77,9 @@ namespace UImGui
 		private CursorShapesAsset _cursorShapes = null;
 
 		[SerializeField]
+		private bool _urpRenderGraphBypass = false;
+
+		[SerializeField]
 		private bool _doGlobalEvents = true; // Do global/default Layout event too.
 
 		private bool _isChangingCamera = false;
@@ -111,7 +113,7 @@ namespace UImGui
 				throw new System.Exception($"Fail: {camera} is null.");
 			}
 
-			if(camera == _camera)
+			if (camera == _camera)
 			{
 				Debug.LogWarning($"Trying to change to same camera. Camera: {camera}", camera);
 				return;
@@ -124,11 +126,6 @@ namespace UImGui
 		private void Awake()
 		{
 			_context = UImGuiUtility.CreateContext();
-		}
-
-		private void OnDestroy()
-		{
-			UImGuiUtility.DestroyContext(_context);
 		}
 
 		private void OnEnable()
@@ -144,14 +141,14 @@ namespace UImGui
 				Fail(nameof(_camera));
 			}
 
-			if (_renderFeature == null && RenderUtility.IsUsingURP())
+			if (!_urpRenderGraphBypass && _renderFeature == null && RenderUtility.IsUsingURP())
 			{
 				Fail(nameof(_renderFeature));
 			}
 
 			_renderCommandBuffer = RenderUtility.GetCommandBuffer(Constants.UImGuiCommandBuffer);
 
-			if (RenderUtility.IsUsingURP())
+			if (RenderUtility.IsUsingURP() && !_urpRenderGraphBypass)
 			{
 #if HAS_URP
 				_renderFeature.Camera = _camera;
@@ -216,7 +213,7 @@ namespace UImGui
 					_renderFeature.CommandBuffer = null;
 				}
 			}
-			else if(!RenderUtility.IsUsingHDRP())
+			else if (!RenderUtility.IsUsingHDRP())
 			{
 				if (_camera != null)
 				{
@@ -299,6 +296,26 @@ namespace UImGui
 			_platform?.Shutdown(io);
 			_platform = platform;
 			_platform?.Initialize(io, _initialConfiguration, "Unity " + _platformType.ToString());
+		}
+
+		void Start()
+		{
+			if (_urpRenderGraphBypass)
+				RenderPipelineManager.endCameraRendering += OnEndCameraRendering;
+		}
+
+		private void OnDestroy()
+		{
+			UImGuiUtility.DestroyContext(_context);
+			if (_urpRenderGraphBypass)
+				RenderPipelineManager.endCameraRendering -= OnEndCameraRendering;
+		}
+
+		private void OnEndCameraRendering(ScriptableRenderContext context, Camera cam)
+		{
+			if (cam != _camera)
+				return;
+			Graphics.ExecuteCommandBuffer(this.CommandBuffer);
 		}
 	}
 }

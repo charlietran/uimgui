@@ -10,6 +10,7 @@ namespace UImGui.Editor
 	[CustomEditor(typeof(UImGui))]
 	internal class UImGuiEditor : UnityEditor.Editor
 	{
+		private SerializedProperty _urpRenderGraphBypass;
 		private SerializedProperty _doGlobalEvents;
 		private SerializedProperty _camera;
 		private SerializedProperty _renderFeature;
@@ -36,6 +37,7 @@ namespace UImGui.Editor
 
 			EditorGUI.BeginChangeCheck();
 
+			EditorGUILayout.PropertyField(_urpRenderGraphBypass);
 			EditorGUILayout.PropertyField(_doGlobalEvents);
 			if (RenderUtility.IsUsingURP())
 			{
@@ -70,6 +72,7 @@ namespace UImGui.Editor
 
 		private void OnEnable()
 		{
+			_urpRenderGraphBypass = serializedObject.FindProperty("_urpRenderGraphBypass");
 			_doGlobalEvents = serializedObject.FindProperty("_doGlobalEvents");
 			_camera = serializedObject.FindProperty("_camera");
 			_renderFeature = serializedObject.FindProperty("_renderFeature");
@@ -97,9 +100,9 @@ namespace UImGui.Editor
 		private void CheckRequirements()
 		{
 			var textImGui = $"ImGUI: {ImGui.GetVersion()}";
-			var textImNodes = $"ImNodes: { (usingImNodes ? "0.4 - 2021-07-09" : "disabled") }";
-			var textImGuizmo = $"ImGuizmo: { (usingImGuizmo ? "?? - 2021-07-09" : "disabled") }";
-			var textImPlot = $"ImPlot: { (usingImPlot ? "0.10 - 2021-07-09" : "disabled") }";
+			var textImNodes = $"ImNodes: {(usingImNodes ? "0.4 - 2021-07-09" : "disabled")}";
+			var textImGuizmo = $"ImGuizmo: {(usingImGuizmo ? "?? - 2021-07-09" : "disabled")}";
+			var textImPlot = $"ImPlot: {(usingImPlot ? "0.10 - 2021-07-09" : "disabled")}";
 
 			EditorGUILayout.LabelField(textImGui);
 			EditorGUILayout.LabelField(textImNodes);
@@ -113,7 +116,7 @@ namespace UImGui.Editor
 				_messages.AppendLine("Must assign a Camera.");
 			}
 
-			if (RenderUtility.IsUsingURP() && _renderFeature.objectReferenceValue == null)
+			if (RenderUtility.IsUsingURP() && !_urpRenderGraphBypass.boolValue && _renderFeature.objectReferenceValue == null)
 			{
 				_messages.AppendLine("Must assign a RenderFeature when using the URP.");
 			}
